@@ -1,56 +1,33 @@
-from flask import Flask, jsonify, request, render_template
-import json
+from flask import Flask, jsonify, request, render_template, abort
+import json, os
 
-app = Flask(__name__, static_folder='', template_folder='')
+app = Flask(__name__)
+#static_folder='', template_folder=''
+
+def load_character(name):
+    path = os.path.join(app.root_path, 'data', 'chars', f'{name}.json')
+    if not os.path.exists(path):
+        return None
+    with open(path, 'r', encoding='utf-8') as f:
+        return json.load(f)
 
 @app.route('/')
-def home():
+def index():
     return render_template('index.html')
 
-@app.route('/character', methods=['GET', 'POST'])
-def character():
-    with open('RPG_project/character.json', 'r', encoding='utf-8') as f:
-        data = json.load(f)
-        
-    if request.method == 'POST':
-        new_data = request.get_json()
-        if new_data.get('level_up'):
-            data['level'] += 1
-        elif new_data.get('level_down'):
-            data['level'] -= 1
-        with open('RPG_project/character.json', 'w', encoding='utf-8') as f:
-            json.dump(data, f, indent=4, ensure_ascii=False)
+@app.route('/chars/<name>')
+def view_char(name):
+    data = load_character(name)
+    if data is None:
+        return f'Character "{name}" is not found', 404
+    return render_template('char.html', data=data, name=name, editable=False)
 
-
-    if request.method == 'POST':
-        new_data = request.get_json()
-        if new_data.get('stat_synt_up'):
-            data['stats'["Синтаксис"]] += 1
-        elif new_data.get('stat_synt_down'):
-            data['stats'["Синтаксис"]] -= 1
-        with open('RPG_project/character.json', 'w', encoding='utf-8') as f:
-            json.dump(data, f, indent=4, ensure_ascii=False)
-
-    with open('RPG_project/character.json', 'r', encoding='utf-8') as f:
-        data = json.load(f)
-
-    return jsonify(data)
-
-# @app.route('/get')
-# def get_data():
-#     with open('character.json', 'r', encoding='utf-8') as f:
-#         data = json.load(f)
-#     return jsonify(data)
-
-# @app.route('/update', methods=['POST'])
-# def upd_data():
-#     new_data = request.get_json()
-#     with open('character.json', 'r', encoding='utf-8') as f:
-#         data = json.load(f)
-#     data.update(new_data)
-#     with open('character.json', 'w', encoding='utf-8') as f:
-#         json.dump(data, f, indent=4, ensure_ascii=False)
-    # return jsonify(data)
+@app.route('/edit/<name>')
+def edit_char(name):
+    data = load_character(name)
+    if data is None:
+        return f'Character "{name}" is not found', 404
+    return render_template('edit.html', data=data, name=name, editable=True)
 
 if __name__ == '__main__':
     app.run(debug=True)

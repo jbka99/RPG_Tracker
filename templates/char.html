@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <title>Flist</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  </head>
+
+  <body>
+
+  <h1 >Лист Персонажа</h1>
+  <div id="panel">
+    <img id="avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEu12WU616DqcQi137_WU94N4yyO4FVpKd8Q&s" >
+    <div id="character"></div>
+    <div id="stats"></div>
+  </div>
+  <a href="{{ url_for('index') }}" class="back-btn">⬅ На главную</a>
+  <p><a href="{{ url_for('edit_char', name=name) }}">Edit</a></p>
+
+  <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+  </body>
+</html>

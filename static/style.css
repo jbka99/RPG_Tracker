@@ -1,0 +1,81 @@
+body {
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+      background-color: #e8f5e9;
+      color: #1b5e20;
+      max-width: auto;
+      margin: 50px auto;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    @media (max-width: 600px) {
+      #panel {
+        flex-direction: column;
+        align-items: center;
+        gap: 90%;
+      }
+      #avatar img{
+        width: 80%;
+        height: auto;
+      }
+      #character, #stats {
+        width: 90%;
+      }
+    }
+    #block {
+      border-radius: 12px;
+      max-width: 300px;
+      height: 500px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+    #panel {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+      align-items: center;
+      align-content: center;
+      justify-content: space-evenly;
+      gap: 50px;
+    }
+    #avatar {
+      border-radius: 12px;
+      /* max-width: 300px;
+      height: 500px; */
+      padding: 20px;
+      /* box-shadow: 0 2px 8px rgba(0,0,0,0.5); */
+    }
+    #character {
+      /* margin: 20px auto; */
+      max-width: 300px;
+      height: 500px;
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+    #stats {
+      /* margin: 20px auto; */
+      max-width: 300px;
+      height: 500px;
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+    button {
+      width: 25px;
+      height: 25px;
+      background: #9ecf9e;
+      color: white;
+      border-radius: 100%;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    button:hover {
+      background: #2e812e;
+    }
+    button:active {
+      transform: scale(0.7);
+    }

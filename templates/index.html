@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <title>Flist</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+
+    <body>
+    <h1>Your characters</h1>
+    <div id="panel">
+        <div id="block">
+            <div><img id="avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPtCBdlq4hR6jNFFtkxEYrgJoOgnsMgKp3PQ&s" ></div>
+            <div>Name</div>
+            <div>Rename</div>
+            <div>Delete</div>
+        </div>
+
+        <div id="block">
+            <div><img id="avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPtCBdlq4hR6jNFFtkxEYrgJoOgnsMgKp3PQ&s" ></div>
+            <div><input></div>
+           <div>Create</div>
+        </div>
+    </div>
+    <p>Or open <a href="{{ url_for('view_char', name='jbka') }}">Jbka</a></p>
+    <script src="{{ url_for('static', filename='scripts.js') }}">
+    </script>
+    </body>
+</html>
