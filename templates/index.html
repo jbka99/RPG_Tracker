@@ -1,27 +1,32 @@
 <!DOCTYPE html>
 <html lang="ru">
-    <head>
-        <meta charset="UTF-8">
-        <title>Flist</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <title>Flist</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
 
-    <body>
+<body>
     <h1>Your characters</h1>
     <div id="panel">
-        <div id="block">
-            <div><img id="avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPtCBdlq4hR6jNFFtkxEYrgJoOgnsMgKp3PQ&s" ></div>
+        <!-- Существующий перс -->
+        <div class="block">
+            <div><img id="avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPtCBdlq4hR6jNFFtkxEYrgJoOgnsMgKp3PQ&s"></div>
             <div>Name</div>
             <div>Rename</div>
             <div>Delete</div>
         </div>
 
-        <div id="block">
-            <div><img id="avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPtCBdlq4hR6jNFFtkxEYrgJoOgnsMgKp3PQ&s" ></div>
-            <div><input></div>
-           <div>Create</div>
+        <!-- Справа создается перс -->
+        <div class="block">
+            <div><img id="avatar-preview" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPtCBdlq4hR6jNFFtkxEYrgJoOgnsMgKp3PQ&s"></div>
+            <input type="file" id="avatar-input" style="display: none;">
+            <button onclick="document.getElementById('avatar-input').click()">+</button>
+            <div><input type="text" id="character-name" placeholder="Enter name"></div>
+            <div onclick="createCharacter()" style="cursor: pointer;">Create</div>
         </div>
     </div>
+    
     <p>Or open <a href="{{ url_for('view_char', name='jbka') }}">Jbka</a></p>
 
     {% if not logged_in %}
@@ -30,13 +35,13 @@
             <form id="login_form">
                 <input name="username" placeholder="Login">
                 <input name="password" type="password" placeholder="Pass">
-                <button>Enter</button>
+                <button class="ButtonLogin">Enter</button>
             </form>
             <h2>Register</h2>
             <form id="register_form">
                 <input name="username" placeholder="Login">
                 <input name="password" type="password" placeholder="Pass">
-                <button>Register</button>
+                <button class="ButtonRegist">Register</button>
             </form>
             <p id="auth_message"></p>
         </section>
@@ -47,7 +52,7 @@
         </section>
     {% endif %}
         <script>
-    // <script src="{{ url_for('static', filename='scripts.js') }}">
+
         function formToJSON(form) {
             const fd = new FormData(form);
             return Object.fromEntries(fd.entries());
@@ -97,7 +102,9 @@
                 await fetch('/api/logout', { method: "POST"});
                 location.reload();
             });
-        }
+        }  
     </script>
+     <script src="{{ url_for('static', filename='scripts.js') }}"></script>
     </body>
 </html>
+        </div>

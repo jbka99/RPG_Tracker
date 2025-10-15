@@ -64,3 +64,44 @@ fetch('/delete', {
   method: 'POST',
   name
 })
+// Загрузка аватарки
+document.getElementById('avatar-input').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('avatar-preview').src = e.target.result;
+        }
+        reader.readAsDataURL(file);
+    }
+});
+
+// Создание персонажа
+function createCharacter() {
+    const name = document.getElementById('character-name').value;
+    const avatar = document.getElementById('avatar-preview').src;
+    
+    if (!name) {
+        alert('Please enter character name');
+        return;
+    }
+    
+
+    const newCharacter = document.createElement('div');
+    newCharacter.id = 'block';
+    newCharacter.innerHTML = `
+        <div><img id="avatar" src="${avatar}"></div>
+        <div>${name}</div>
+        <div>Rename</div>
+        <div>Delete</div>
+    `;
+    
+
+    document.getElementById('panel').insertBefore(newCharacter, document.getElementById('panel').children[1]);
+    
+
+    document.getElementById('character-name').value = '';
+    document.getElementById('avatar-preview').src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPtCBdlq4hR6jNFFtkxEYrgJoOgnsMgKp3PQ&s';
+    
+    alert('Character created: ' + name);
+}
