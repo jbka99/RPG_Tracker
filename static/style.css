@@ -15,7 +15,7 @@ body {
         align-items: center;
         gap: 90%;
       }
-      #avatar img{
+      .avatar img{
         width: 80%;
         height: auto;
       }
@@ -23,7 +23,7 @@ body {
         width: 90%;
       }
     }
-    #block {
+    .block {
       border-radius: 12px;
       max-width: 300px;
       height: 500px;
@@ -39,15 +39,13 @@ body {
       justify-content: space-evenly;
       gap: 50px;
     }
-    #avatar {
-      border-radius: 12px;
-      /* max-width: 300px;
-      height: 500px; */
-      padding: 20px;
-      /* box-shadow: 0 2px 8px rgba(0,0,0,0.5); */
+    .avatar {
+        border-radius: 12px;
+        max-width: 100%;
+        height: auto;
+        width: auto;
     }
     #character {
-      /* margin: 20px auto; */
       max-width: 300px;
       height: 500px;
       background: white;
@@ -56,7 +54,6 @@ body {
       box-shadow: 0 2px 8px rgba(0,0,0,0.5);
     }
     #stats {
-      /* margin: 20px auto; */
       max-width: 300px;
       height: 500px;
       background: white;
@@ -78,4 +75,26 @@ body {
     }
     button:active {
       transform: scale(0.7);
+    }
+    #avatar-preview {
+        border-radius: 12px;
+        max-width: 300px;
+        height: auto;
+        width: auto;
+    }
+
+    button {
+        padding: 1px 1px;
+        background: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 5px;
+    }
+
+    #character-name {
+        padding: 5px;
+        margin: 5px;
+        width: 80%;
     }
