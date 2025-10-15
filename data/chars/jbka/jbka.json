@@ -1,9 +1,9 @@
 {
-  "name":	"",		   
-  "race": "",	   
-  "class": "",
-  "background":	"",
-  "level_XP":	"",
+  "name":	"Eugene",		   
+  "race": "Human",	   
+  "class": "Aspiring Python Developer",
+  "background":	"black",
+  "level_XP":	"19 (1900 xp)",
   
   "stats": {
     "str": 0,

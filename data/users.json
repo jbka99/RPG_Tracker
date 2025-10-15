@@ -1,0 +1,8 @@
+{
+    "users": [
+        {
+            "username": "fox",
+            "password": "scrypt:32768:8:1$vN56zcwJJ7MDynTj$e382449c4aaf4f5f68ebf27da97fe2f932c701e0e3791f0b42138ac06e2e58aed5a231a210bf5b06401ec8dfceb8d2a274f692bcd34813e07ad1e2b1fa60a1e1"
+        }
+    ]
+}
