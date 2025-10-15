@@ -35,13 +35,13 @@
             <form id="login_form">
                 <input name="username" placeholder="Login">
                 <input name="password" type="password" placeholder="Pass">
-                <button>Enter</button>
+                <button class="ButtonLogin">Enter</button>
             </form>
             <h2>Register</h2>
             <form id="register_form">
                 <input name="username" placeholder="Login">
                 <input name="password" type="password" placeholder="Pass">
-                <button>Register</button>
+                <button class="ButtonRegist">Register</button>
             </form>
             <p id="auth_message"></p>
         </section>
@@ -52,7 +52,7 @@
         </section>
     {% endif %}
         <script>
-    // <script src="{{ url_for('static', filename='scripts.js') }}">
+
         function formToJSON(form) {
             const fd = new FormData(form);
             return Object.fromEntries(fd.entries());
@@ -102,7 +102,9 @@
                 await fetch('/api/logout', { method: "POST"});
                 location.reload();
             });
-        }
+        }  
     </script>
+     <script src="{{ url_for('static', filename='scripts.js') }}"></script>
     </body>
 </html>
+        </div>

@@ -98,3 +98,13 @@ body {
         margin: 5px;
         width: 80%;
     }
+    .ButtonLogin {
+      width: 50px;
+    }
+
+    .ButtonRegist {
+      width: 50px;
+    }
+    #logout {
+      width: 50px;
+    }
