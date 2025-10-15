@@ -23,7 +23,81 @@
         </div>
     </div>
     <p>Or open <a href="{{ url_for('view_char', name='jbka') }}">Jbka</a></p>
-    <script src="{{ url_for('static', filename='scripts.js') }}">
+
+    {% if not logged_in %}
+        <section id="auth">
+            <h2>Login</h2>
+            <form id="login_form">
+                <input name="username" placeholder="Login">
+                <input name="password" type="password" placeholder="Pass">
+                <button>Enter</button>
+            </form>
+            <h2>Register</h2>
+            <form id="register_form">
+                <input name="username" placeholder="Login">
+                <input name="password" type="password" placeholder="Pass">
+                <button>Register</button>
+            </form>
+            <p id="auth_message"></p>
+        </section>
+    {% else %}
+        <section id="welcome">
+            <p>Hi, {{username}}.</p>
+            <button id="logout">Logout</button>
+        </section>
+    {% endif %}
+        <script>
+    // <script src="{{ url_for('static', filename='scripts.js') }}">
+        function formToJSON(form) {
+            const fd = new FormData(form);
+            return Object.fromEntries(fd.entries());
+        }
+
+        const register_form = document.getElementById('register_form');
+        if (register_form) {
+            register_form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const body = JSON.stringify(formToJSON(register_form));
+                const res = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body
+                });
+                const data = await res.json();
+                if (data.ok) {
+                    location.reload();
+                } else {
+                    console.log(data.error);
+                }
+            });
+        }
+
+        const login_form = document.getElementById('login_form');
+        if (login_form) {
+            login_form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const body = JSON.stringify(formToJSON(login_form));
+                const res = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body
+                });
+                const data = await res.json();
+                if (data.ok) {
+                    location.reload();
+                } else {
+                    console.log(data.error);
+                }
+            });
+        }
+
+        const logout = document.getElementById('logout');
+        if (logout) {
+            logout.addEventListener('click', async () => {
+                await fetch('/api/logout', { method: "POST"});
+                location.reload();
+            });
+        }
     </script>
     </body>
 </html>
