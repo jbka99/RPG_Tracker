@@ -73,7 +73,6 @@ def index():
         return render_template('index.html', logged_in=True, username=session['user'])
     else:
         return render_template('index.html', logged_in=False)
-    # return render_template('index.html')
 
 @app.route('/chars/<name>')
 def view_char(name):
