@@ -10,12 +10,12 @@
     <h1>Your characters</h1>
     <div id="panel">
         <!-- Существующий перс -->
-        <div class="block">
+        <!-- <div class="block">
             <div><img id="avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPtCBdlq4hR6jNFFtkxEYrgJoOgnsMgKp3PQ&s"></div>
             <div>Name</div>
             <div>Rename</div>
             <div>Delete</div>
-        </div>
+        </div> -->
 
         <!-- Справа создается перс -->
         <div class="block">
@@ -26,8 +26,6 @@
             <div onclick="createCharacter()" style="cursor: pointer;">Create</div>
         </div>
     </div>
-    
-    <p>Or open <a href="{{ url_for('view_char', name='jbka') }}">Jbka</a></p>
 
     {% if not logged_in %}
         <section id="auth">

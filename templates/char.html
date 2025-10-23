@@ -1,22 +1,125 @@
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8">
-    <title>Flist</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  </head>
+<head>
+  <meta charset="UTF-8">
+  <title>{{ data.get('name', sheet_name) }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    body { background: #e9f5e9; font-family: Arial, sans-serif; }
+    .sheet { max-width: 850px; margin: 2rem auto; background: #fff; padding: 20px 40px; border-radius: 14px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+    h1 { text-align: center; color: #1d5c1d; margin-bottom: 20px; }
+    h2 { margin-top: 30px; color: #2b672b; border-bottom: 1px solid #ccc; padding-bottom: 5px; }
+    label { display: block; font-weight: bold; margin-top: 10px; }
+    input, textarea { width: 100%; border-radius: 6px; border: 1px solid #aaa; padding: 6px; margin-top: 3px; font-size: 14px; }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px;}
+    .skills { columns: 2; -webkit-columns: 2; -moz-columns: 2; }
+    button { margin-top: 20px; padding: 10px 18px; background: #4CAF50; border: none; color: white; border-radius: 6px; cursor: pointer; font-size: 15px; }
+    button:hover { background: #3b8b3f; }
+  </style>
+</head>
+<body>
+  <a href="{{ url_for('index') }}">⬅ На главную</a>
+  <div class="sheet">
+    <!-- <h1>{{ data.get('name', 'Новый персонаж') }}</h1> -->
 
-  <body>
+    <label>Имя персонажа:</label>
+    <input id="char-name" value="{{ data.get('name', '') }}">
 
-  <h1 >Лист Персонажа</h1>
-  <div id="panel">
-    <img id="avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEu12WU616DqcQi137_WU94N4yyO4FVpKd8Q&s" >
-    <div id="character"></div>
-    <div id="stats"></div>
+    <label>Раса:</label>
+    <input id="char-race" value="{{ data.get('race', '') }}">
+
+    <label>Класс:</label>
+    <input id="char-class" value="{{ data.get('class', '') }}">
+
+    <label>Фон:</label>
+    <input id="char-background" value="{{ data.get('background', '') }}">
+
+
+    <!--Айди у каждого стата должен быть уникальный иначе данные не будут обновлятся!!!-->
+    <h2>Характеристики</h2>
+    <div class="stats">
+      <label>STR</label>
+      <input id="stat-str" value="{{ data.get('stats', {}).get('str', '') }}" placeholder="STR"><br>
+      <label>DEX</label>
+      <input id="stat-dex" value="{{ data.get('stats', {}).get('dex', '') }}" placeholder="DEX"><br>
+      <label>CON</label>
+      <input id="stat-con" value="{{ data.get('stats', {}).get('con', '') }}" placeholder="CON"><br>
+      <label>INT</label>
+      <input id="stat-int" value="{{ data.get('stats', {}).get('int', '') }}" placeholder="INT"><br>
+      <label>WIS</label>
+      <input id="stat-wis" value="{{ data.get('stats', {}).get('wis', '') }}" placeholder="WIS"><br>
+      <label>CHR</label>
+      <input id="stat-chr" value="{{ data.get('stats', {}).get('chr', '') }}" placeholder="CHR"><br>
+    </div>
+
+    <h2>Боевая информация</h2>
+    <label>Armor Class:</label><input id="armor" value="{{ data.get('Armor Class', 0) }}">
+    <label>Initiative:</label><input id="initiative" value="{{ data.get('Initiative', 0) }}">
+    <label>Speed:</label><input id="speed" value="{{ data.get('Speed', 0) }}">
+    <label>Max HP:</label><input id="maxhp" value="{{ data.get('Max HP', 0) }}">
+    <label>Current HP:</label><input id="curhp" value="{{ data.get('Current HP', 0) }}">
+    <label>Hit Dice:</label><input id="hitdice" value="{{ data.get('Hit Dice', 0) }}">
+    <label>Death Saves:</label><input id="deathsaves" value="{{ data.get('Death Saves', '') }}">
+
+    <h2>Навыки</h2>
+    <div class="skills">
+      {% for skill, mod in data.get('Skills', {}).items() %}
+        <label>{{ skill.title() }} ({{ mod }}):</label>
+        <input id="skill-{{ skill }}" value="{{ mod }}">
+      {% endfor %}
+    </div>
+
+    <h2>Прочее</h2>
+    <label>Actions and Equipment:</label><textarea id="actions">{{ data.get('Actions and Equipment', '') }}</textarea>
+    <label>Other Proficiencies and Languages:</label><textarea id="languages">{{ data.get('Other Proficiencies and Languages', '') }}</textarea>
+    <label>Racial Features:</label><textarea id="racial">{{ data.get('Racial Features', '') }}</textarea>
+    <label>Class Features:</label><textarea id="classf">{{ data.get('Class Features', '') }}</textarea>
+    <label>Misc Features:</label><textarea id="misc">{{ data.get('Misc Features', '') }}</textarea>
+    <label>Notes:</label><textarea id="notes">{{ data.get('Notes', '') }}</textarea>
+
+    <button onclick="saveCharacter()">Сохранить</button>
   </div>
-  <a href="{{ url_for('index') }}" class="back-btn">⬅ На главную</a>
-  <p><a href="{{ url_for('edit_char', name=name) }}">Edit</a></p>
 
-  <script src="{{ url_for('static', filename='scripts.js') }}"></script>
-  </body>
+  <script>
+    async function saveCharacter() {
+      const sheet = "{{ sheet_name }}";
+      const data = {
+        name: document.getElementById('char-name').value,
+        race: document.getElementById('char-race').value,
+        class: document.getElementById('char-class').value,
+        background: document.getElementById('char-background').value,
+        stats: {
+          str: document.getElementById('stat-str').value,
+          dex: document.getElementById('stat-dex').value,
+          con: document.getElementById('stat-con').value,
+          int: document.getElementById('stat-int').value,
+          wis: document.getElementById('stat-wis').value,
+          chr: document.getElementById('stat-chr').value
+        },
+        "Armor Class": document.getElementById('armor').value,
+        "Initiative": document.getElementById('initiative').value,
+        "Speed": document.getElementById('speed').value,
+        "Max HP": document.getElementById('maxhp').value,
+        "Current HP": document.getElementById('curhp').value,
+        "Hit Dice": document.getElementById('hitdice').value,
+        "Death Saves": document.getElementById('deathsaves').value,
+        "Actions and Equipment": document.getElementById('actions').value,
+        "Other Proficiencies and Languages": document.getElementById('languages').value,
+        "Racial Features": document.getElementById('racial').value,
+        "Class Features": document.getElementById('classf').value,
+        "Misc Features": document.getElementById('misc').value,
+        "Notes": document.getElementById('notes').value
+      };
+
+      const res = await fetch(`/api/chars/${sheet}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      const result = await res.json();
+      alert(result.ok ? "Изменения сохранены!" : "Ошибка: " + result.error);
+    }
+  </script>
+</body>
 </html>
